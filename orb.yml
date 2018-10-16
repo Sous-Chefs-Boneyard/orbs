@@ -51,6 +51,9 @@ jobs:
       #     name: amazonlinux
       #     command: kitchen test <<parameters.suite>>-amazonlinux
       - run:
+          name: amazonlinux-2
+          command: kitchen test <<parameters.suite>>-amazonlinux-2
+      - run:
           name: centos-6
           command: kitchen test <<parameters.suite>>-centos-6
       - run:
@@ -63,14 +66,11 @@ jobs:
           name: debian-9
           command: kitchen test <<parameters.suite>>-debian-9
       - run:
-          name: fedora-latest
-          command: kitchen test <<parameters.suite>>-fedora-latest
-      - run:
           name: ubuntu-16.04
           command: kitchen test <<parameters.suite>>-ubuntu-1604
       - run:
           name: ubuntu-18.04
-          command: kitchen test <<parameters.suite>>-ubuntu-1604
+          command: kitchen test <<parameters.suite>>-ubuntu-1804
   dokken-single:
     executor: chef
     parameters:
