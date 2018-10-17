@@ -1,5 +1,5 @@
 # CircleCI Orb For Sous-chefs
-This repository contains the preview feature (orbs)[https://github.com/CircleCI-Public/config-preview-sdk/tree/master/docs]
+This repository contains the preview feature [orbs](https://github.com/CircleCI-Public/config-preview-sdk/tree/master/docs)
 
 ## View Source
 
