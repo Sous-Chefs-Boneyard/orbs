@@ -93,3 +93,13 @@ jobs:
           command: curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -c <<parameters.channel>> -P chefdk
       - run:
           command: kitchen test <<parameters.suite>>-<<parameters.platform>>
+  mdlint:
+    executor: ruby
+    steps:
+      - checkout
+      - run:
+          name: Install Markdown Linter
+          command: gem install mdl
+      - run:
+          name: Run Markdown Linter
+          command: mdl ./
