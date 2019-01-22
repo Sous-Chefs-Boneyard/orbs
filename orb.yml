@@ -1,7 +1,10 @@
+---
 version: 2.1
 executors:
   ruby:
-    docker: [ image: circleci/ruby ]
+    docker: ["image: circleci/ruby"]
+  python:
+    docker: ["image: circleci/python"]
   chef:
     machine: true
 jobs:
@@ -26,7 +29,8 @@ jobs:
       - checkout
       - run:
           name: Install Chef
-          command: curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -c <<parameters.channel>> -P chefdk
+          command: curl -L https://omnitruck.chef.io/install.sh |
+                   sudo bash -s -- -c <<parameters.channel>> -P chefdk
       - run:
           name: Unit Test
           command: chef exec delivery local all
@@ -46,10 +50,11 @@ jobs:
       - checkout
       - run:
           name: Install Chef
-          command: curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -c <<parameters.channel>> -P chefdk
-      # - run:
-      #     name: amazonlinux
-      #     command: kitchen test <<parameters.suite>>-amazonlinux
+          command: curl -L https://omnitruck.chef.io/install.sh |
+                   sudo bash -s -- -c <<parameters.channel>> -P chefdk
+      - run:
+          name: amazonlinux
+          command: kitchen test <<parameters.suite>>-amazonlinux
       - run:
           name: amazonlinux-2
           command: kitchen test <<parameters.suite>>-amazonlinux-2
@@ -90,7 +95,8 @@ jobs:
       - checkout
       - run:
           name: Install Chef
-          command: curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -c <<parameters.channel>> -P chefdk
+          command: curl -L https://omnitruck.chef.io/install.sh |
+                   sudo bash -s -- -c <<parameters.channel>> -P chefdk
       - run:
           command: kitchen test <<parameters.suite>>-<<parameters.platform>>
   mdlint:
@@ -103,3 +109,13 @@ jobs:
       - run:
           name: Run Markdown Linter
           command: mdl ./
+  yamllint:
+    executor: python
+    steps:
+      - checkout
+      - run
+          name: Install YamlLint
+          command: pip install --user yamllint
+      - run
+          name: Run YamlLint
+          command: yamllint .
