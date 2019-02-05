@@ -1,11 +1,12 @@
+---
 version: 2.1
-
 orbs:
-  kitchen: sous-chefs/kitchen@1.0.0
-
+  kitchen: sous-chefs/kitchen@1.0.1
+  orb-tools: circleci/orb-tools@7.3.0
 workflows:
-  kitchen:
+  danger:
     jobs:
       - kitchen/danger:
           name: danger
           context: Danger
+      - orb-tools/lint

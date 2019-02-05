@@ -1,9 +1,25 @@
+---
 version: 2.1
 executors:
   ruby:
-    docker: [ image: circleci/ruby ]
+    docker: ["image: circleci/ruby"]
+  python:
+    docker: ["image: circleci/python"]
   chef:
     machine: true
+commands:
+  install_chef:
+    description: Installs Chef Workstation
+    parameters:
+      channel:
+        description: ChefDK channel stable or current
+        type: string
+        default: curren
+    steps:
+      - run:
+          name: Install Chef
+          command: curl -L https://omnitruck.chef.io/install.sh |
+                    sudo bash -s -- -c <<parameters.channel>> -P chefdk
 jobs:
   danger:
     executor: ruby
@@ -24,9 +40,7 @@ jobs:
         default: current
     steps:
       - checkout
-      - run:
-          name: Install Chef
-          command: curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -c <<parameters.channel>> -P chefdk
+      - install_chef
       - run:
           name: Unit Test
           command: chef exec delivery local all
@@ -44,12 +58,10 @@ jobs:
       KITCHEN_LOCAL_YAML: .kitchen.dokken.yml
     steps:
       - checkout
+      - install_chef
       - run:
-          name: Install Chef
-          command: curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -c <<parameters.channel>> -P chefdk
-      # - run:
-      #     name: amazonlinux
-      #     command: kitchen test <<parameters.suite>>-amazonlinux
+          name: amazonlinux
+          command: kitchen test <<parameters.suite>>-amazonlinux
       - run:
           name: amazonlinux-2
           command: kitchen test <<parameters.suite>>-amazonlinux-2
@@ -88,9 +100,7 @@ jobs:
       KITCHEN_LOCAL_YAML: .kitchen.dokken.yml
     steps:
       - checkout
-      - run:
-          name: Install Chef
-          command: curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -c <<parameters.channel>> -P chefdk
+      - install_chef
       - run:
           command: kitchen test <<parameters.suite>>-<<parameters.platform>>
   mdlint:
@@ -103,3 +113,13 @@ jobs:
       - run:
           name: Run Markdown Linter
           command: mdl ./
+  yamllint:
+    executor: python
+    steps:
+      - checkout
+      - run:
+          name: Install YamlLint
+          command: pip install --user yamllint
+      - run:
+          name: Run YamlLint
+          command: yamllint .
