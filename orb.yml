@@ -1,12 +1,16 @@
 ---
 version: 2.1
+
 executors:
+  delivery:
+    docker: [image: chef/chefdk:3]
   ruby:
-    docker: ["image: circleci/ruby"]
+    docker: [image: circleci/ruby]
   python:
-    docker: ["image: circleci/python"]
+    docker: [image: circleci/python]
   chef:
     machine: true
+
 commands:
   install_chef:
     description: Installs Chef Workstation
@@ -31,8 +35,8 @@ jobs:
       - run:
           name: Run Danger
           command: danger
-  lint:
-    executor: ruby
+  delivery:
+    executor: delivery
     parameters:
       channel:
         description: ChefDK channel stable or current
@@ -40,10 +44,9 @@ jobs:
         default: current
     steps:
       - checkout
-      - install_chef
       - run:
-          name: Unit Test
-          command: chef exec delivery local all
+          name: Run delivery
+          command: delivery local all
   dokken:
     executor: chef
     parameters:
