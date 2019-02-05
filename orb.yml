@@ -52,6 +52,10 @@ jobs:
         description: ChefDK channel stable or current
         type: string
         default: current
+      timeout:
+        description: Set the command timeout
+        type: string
+        default: 1h
     environment:
       KITCHEN_LOCAL_YAML: .kitchen.dokken.yml
     steps:
@@ -59,35 +63,35 @@ jobs:
       - install_chef
       - run:
           name: amazonlinux
-          no_output_timeout: 1.25h
+          no_output_timeout: <<parameters.timeout>>
           command: kitchen test <<parameters.suite>>-amazonlinux
       - run:
           name: amazonlinux-2
-          no_output_timeout: 1.25h
+          no_output_timeout: <<parameters.timeout>>
           command: kitchen test <<parameters.suite>>-amazonlinux-2
       - run:
           name: centos-6
-          no_output_timeout: 1.25h
+          no_output_timeout: <<parameters.timeout>>
           command: kitchen test <<parameters.suite>>-centos-6
       - run:
           name: centos-7
-          no_output_timeout: 1.25h
+          no_output_timeout: <<parameters.timeout>>
           command: kitchen test <<parameters.suite>>-centos-7
       - run:
           name: debian-8
-          no_output_timeout: 1.25h
+          no_output_timeout: <<parameters.timeout>>
           command: kitchen test <<parameters.suite>>-debian-8
       - run:
           name: debian-9
-          no_output_timeout: 1.25h
+          no_output_timeout: <<parameters.timeout>>
           command: kitchen test <<parameters.suite>>-debian-9
       - run:
           name: ubuntu-16.04
-          no_output_timeout: 1.25h
+          no_output_timeout: <<parameters.timeout>>
           command: kitchen test <<parameters.suite>>-ubuntu-1604
       - run:
           name: ubuntu-18.04
-          no_output_timeout: 1.25h
+          no_output_timeout: <<parameters.timeout>>
           command: kitchen test <<parameters.suite>>-ubuntu-1804
   dokken-single:
     executor: chef
