@@ -13,12 +13,12 @@ executors:
 
 commands:
   install_chef:
-    description: Installs Chef Workstation
+    description: Installs Chef Development Kit
     parameters:
       channel:
         description: ChefDK channel stable or current
         type: string
-        default: curren
+        default: current
     steps:
       - run:
           name: Install Chef
@@ -37,11 +37,6 @@ jobs:
           command: danger
   delivery:
     executor: delivery
-    parameters:
-      channel:
-        description: ChefDK channel stable or current
-        type: string
-        default: current
     steps:
       - checkout
       - run:
@@ -64,27 +59,35 @@ jobs:
       - install_chef
       - run:
           name: amazonlinux
+          no_output_timeout: 1.25h
           command: kitchen test <<parameters.suite>>-amazonlinux
       - run:
           name: amazonlinux-2
+          no_output_timeout: 1.25h
           command: kitchen test <<parameters.suite>>-amazonlinux-2
       - run:
           name: centos-6
+          no_output_timeout: 1.25h
           command: kitchen test <<parameters.suite>>-centos-6
       - run:
           name: centos-7
+          no_output_timeout: 1.25h
           command: kitchen test <<parameters.suite>>-centos-7
       - run:
           name: debian-8
+          no_output_timeout: 1.25h
           command: kitchen test <<parameters.suite>>-debian-8
       - run:
           name: debian-9
+          no_output_timeout: 1.25h
           command: kitchen test <<parameters.suite>>-debian-9
       - run:
           name: ubuntu-16.04
+          no_output_timeout: 1.25h
           command: kitchen test <<parameters.suite>>-ubuntu-1604
       - run:
           name: ubuntu-18.04
+          no_output_timeout: 1.25h
           command: kitchen test <<parameters.suite>>-ubuntu-1804
   dokken-single:
     executor: chef
@@ -125,4 +128,6 @@ jobs:
           command: pip install --user yamllint
       - run:
           name: Run YamlLint
-          command: yamllint .
+          command: |
+            export PATH=/home/circleci/.local/bin:$PATH
+            yamllint .
