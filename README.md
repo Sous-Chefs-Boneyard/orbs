@@ -1,7 +1,6 @@
 # CircleCI Orb For Sous-chefs
 
-This repository contains the preview feature [orbs](https://github.com/CircleCI-Public/config-preview-sdk/tree/master/docs)
-
+This repository contains the [Sous-Chefs orb](https://circleci.com/orbs/registry/orb/sous-chefs/kitchen)
 
 ## View Source
 
@@ -17,22 +16,25 @@ Then use the orb in a workflow.
 
 ```yaml
 version: 2.1
-
 orbs:
-  kitchen: sous-chefs/kitchen@1.0.1
-
+  kitchen: sous-chefs/kitchen@dev:first
 workflows:
   kitchen:
     jobs:
-      - kitchen/lint:
-          name: lint
+      # Lint and Unit Test
+      - kitchen/yamllint:
+          name: lint-yaml
+      - kitchen/mdlint:
+          name: lint-markdown
+      - kitchen/danger:
+          name: danger
+          context: Danger
+      - kitchen/delivery:
+          name: delivery
+
+      # Run Test Kitchern
       - kitchen/dokken:
-          name: global
           suite: global
-          requires: [ lint ]
-      - kitchen/dokken-single:
-          name: system-install
-          suite: system-install
-          platform: centos-7
-          requires: [ lint ]
+          name: global
+          requires: [delivery,danger, lint-yaml, lint-markdown]
 ```

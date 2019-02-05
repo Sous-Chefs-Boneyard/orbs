@@ -93,6 +93,10 @@ jobs:
           name: ubuntu-18.04
           no_output_timeout: <<parameters.timeout>>
           command: kitchen test <<parameters.suite>>-ubuntu-1804
+      - store_artifacts:
+          path: .kitchen/logs
+          when: always
+
   dokken-single:
     executor: chef
     parameters:
@@ -113,6 +117,9 @@ jobs:
       - install_chef
       - run:
           command: kitchen test <<parameters.suite>>-<<parameters.platform>>
+      - store_artifacts:
+          path: .kitchen/logs
+          when: always
   mdlint:
     executor: ruby
     steps:
