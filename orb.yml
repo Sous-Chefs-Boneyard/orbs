@@ -7,6 +7,19 @@ executors:
     docker: ["image: circleci/python"]
   chef:
     machine: true
+commands:
+  install_chef:
+    description: Installs Chef Workstation
+    parameters:
+      channel:
+        description: ChefDK channel stable or current
+        type: string
+        default: curren
+    steps:
+      - run:
+          name: Install Chef
+          command: curl -L https://omnitruck.chef.io/install.sh |
+                    sudo bash -s -- -c <<parameters.channel>> -P chefdk
 jobs:
   danger:
     executor: ruby
@@ -27,10 +40,7 @@ jobs:
         default: current
     steps:
       - checkout
-      - run:
-          name: Install Chef
-          command: curl -L https://omnitruck.chef.io/install.sh |
-                   sudo bash -s -- -c <<parameters.channel>> -P chefdk
+      - install_chef
       - run:
           name: Unit Test
           command: chef exec delivery local all
@@ -48,10 +58,7 @@ jobs:
       KITCHEN_LOCAL_YAML: .kitchen.dokken.yml
     steps:
       - checkout
-      - run:
-          name: Install Chef
-          command: curl -L https://omnitruck.chef.io/install.sh |
-                   sudo bash -s -- -c <<parameters.channel>> -P chefdk
+      - install_chef
       - run:
           name: amazonlinux
           command: kitchen test <<parameters.suite>>-amazonlinux
@@ -93,10 +100,7 @@ jobs:
       KITCHEN_LOCAL_YAML: .kitchen.dokken.yml
     steps:
       - checkout
-      - run:
-          name: Install Chef
-          command: curl -L https://omnitruck.chef.io/install.sh |
-                   sudo bash -s -- -c <<parameters.channel>> -P chefdk
+      - install_chef
       - run:
           command: kitchen test <<parameters.suite>>-<<parameters.platform>>
   mdlint:
@@ -113,9 +117,9 @@ jobs:
     executor: python
     steps:
       - checkout
-      - run
+      - run:
           name: Install YamlLint
           command: pip install --user yamllint
-      - run
+      - run:
           name: Run YamlLint
           command: yamllint .
