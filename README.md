@@ -8,6 +8,12 @@ This repository contains the preview feature [orbs](https://github.com/CircleCI-
 ```bash
 circleci orb source sous-chefs kitchen
 ```
+```bash
+circleci orb source sous-chefs/kitchen@1.0.1
+```
+```bash
+circleci orb source sous-chefs/kitchen@1.0.2
+```
 
 ## Usage
 
