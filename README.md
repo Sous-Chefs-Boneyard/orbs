@@ -6,7 +6,7 @@ This repository contains the preview feature [orbs](https://github.com/CircleCI-
 ## View Source
 
 ```bash
-circleci orb source sous-chefs kitchen
+circleci orb source sous-chefs/kitchen@1.0.2
 ```
 
 ## Usage
@@ -15,24 +15,29 @@ Include the orb and give it a namespace, in this case `kitchen`
 
 Then use the orb in a workflow.
 
+### Version 1.0.2
+
 ```yaml
 version: 2.1
 
 orbs:
-  kitchen: sous-chefs/kitchen@1.0.1
+  kitchen: sous-chefs/kitchen@1.0.2
 
 workflows:
   kitchen:
     jobs:
-      - kitchen/lint:
-          name: lint
+      - kitchen/danger:
+          name: danger
+          context: Danger
+      - kitchen/delivery:
+          name: delivery
       - kitchen/dokken:
           name: global
           suite: global
-          requires: [ lint ]
+          requires: [ danger, delivery ]
       - kitchen/dokken-single:
           name: system-install
           suite: system-install
           platform: centos-7
-          requires: [ lint ]
+          requires: [ danger, delivery ]
 ```
