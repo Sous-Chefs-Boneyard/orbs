@@ -9,7 +9,8 @@ executors:
   python:
     docker: [image: "circleci/python"]
   chef:
-    machine: true
+    machine:
+      image: "circleci/classic:201808-01"
 
 commands:
   install_chef:
@@ -24,6 +25,7 @@ commands:
           name: Install Chef
           command: curl -L https://omnitruck.chef.io/install.sh |
                     sudo bash -s -- -c <<parameters.channel>> -P chefdk
+
 jobs:
   danger:
     executor: ruby
@@ -93,6 +95,10 @@ jobs:
           name: ubuntu-18.04
           no_output_timeout: <<parameters.timeout>>
           command: kitchen test <<parameters.suite>>-ubuntu-1804
+      - store_artifacts:
+          path: .kitchen/logs
+          when: always
+
   dokken-single:
     executor: chef
     parameters:
@@ -113,6 +119,9 @@ jobs:
       - install_chef
       - run:
           command: kitchen test <<parameters.suite>>-<<parameters.platform>>
+      - store_artifacts:
+          path: .kitchen/logs
+          when: always
   mdlint:
     executor: ruby
     steps:
