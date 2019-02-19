@@ -5,7 +5,7 @@ This repository contains the [Sous-Chefs orb](https://circleci.com/orbs/registry
 ## View Source
 
 ```bash
-circleci orb source sous-chefs kitchen
+circleci orb source sous-chefs/kitchen@1.0.2
 ```
 
 ## Usage
@@ -14,27 +14,8 @@ Include the orb and give it a namespace, in this case `kitchen`
 
 Then use the orb in a workflow.
 
-```yaml
-version: 2.1
-orbs:
-  kitchen: sous-chefs/kitchen@dev:first
-workflows:
-  kitchen:
-    jobs:
-      # Lint and Unit Test
-      - kitchen/yamllint:
-          name: lint-yaml
-      - kitchen/mdlint:
-          name: lint-markdown
-      - kitchen/danger:
-          name: danger
-          context: Danger
-      - kitchen/delivery:
-          name: delivery
+### Version 1.0.2
 
-      # Run Test Kitchern
-      - kitchen/dokken:
-          suite: global
-          name: global
-          requires: [delivery,danger, lint-yaml, lint-markdown]
+```yaml
+
 ```
