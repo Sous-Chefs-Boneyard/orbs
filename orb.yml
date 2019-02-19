@@ -20,23 +20,12 @@ commands:
         description: ChefDK channel stable or current
         type: string
         default: current
-      persist:
-        description: Whether to persist to workspace
-        type: boolean
-        default: false
     steps:
       - run:
           name: Install Chef
           command: curl -L https://omnitruck.chef.io/install.sh |
                     sudo bash -s -- -c <<parameters.channel>> -P chefdk
-      - when:
-          condition: << parameters.persist >>
-          steps:
-            - save_cache:
-                key: chefdk-3-{{ .Revision }}
-                root: "/"
-                paths:
-                 - "/opt/chefdk"
+
 jobs:
   danger:
     executor: ruby
@@ -110,13 +99,6 @@ jobs:
           path: .kitchen/logs
           when: always
 
-  dokken-install-chef:
-    executor: chef
-    steps:
-      - checkout
-      - install_chef:
-          persist: true
-
   dokken-single:
     executor: chef
     parameters:
@@ -134,8 +116,6 @@ jobs:
       KITCHEN_LOCAL_YAML: .kitchen.dokken.yml
     steps:
       - checkout
-      - restore_cache:
-          keys: ["chefdk-3-{{ .Revision }}"]
       - run:
           command: kitchen test <<parameters.suite>>-<<parameters.platform>>
       - store_artifacts:
