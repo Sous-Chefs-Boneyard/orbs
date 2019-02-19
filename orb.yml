@@ -116,6 +116,7 @@ jobs:
       KITCHEN_LOCAL_YAML: .kitchen.dokken.yml
     steps:
       - checkout
+      - install_chef
       - run:
           command: kitchen test <<parameters.suite>>-<<parameters.platform>>
       - store_artifacts:
