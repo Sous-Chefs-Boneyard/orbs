@@ -9,8 +9,8 @@ executors:
   python:
     docker: [image: "circleci/python"]
   chef:
-    machine: true
-      # image: "circleci/classic:201808-01"
+    machine:
+      image: "circleci/classic:201808-01"
 
 commands:
   install_chef:
