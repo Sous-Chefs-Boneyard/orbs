@@ -23,8 +23,13 @@ commands:
     steps:
       - run:
           name: Install Chef
-          command: curl -L https://omnitruck.chef.io/install.sh |
-                    sudo bash -s -- -c <<parameters.channel>> -P chefdk
+          command: |
+            while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do
+                sleep 1;
+            done
+
+            curl -L https://omnitruck.chef.io/install.sh |
+            sudo bash -s -- -c <<parameters.channel>> -P chefdk
 
 jobs:
   danger:
