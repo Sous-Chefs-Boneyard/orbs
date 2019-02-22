@@ -105,9 +105,6 @@ jobs:
       suite:
         description: Test Kitchen suite name
         type: string
-      platform:
-        description: Test platform
-        type: string
       channel:
         description: ChefDK channel stable or current
         type: string
@@ -118,7 +115,7 @@ jobs:
       - checkout
       - install_chef
       - run:
-          command: kitchen test <<parameters.suite>>-<<parameters.platform>>
+          command: kitchen test <<parameters.suite>>
       - store_artifacts:
           path: .kitchen/logs
           when: always
