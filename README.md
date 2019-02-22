@@ -52,9 +52,8 @@ workflows:
 
       # Run a single platform
       - kitchen/dokken-single:
+          suite: default-centos-7
           name: default-centos-7
-          platform: centos-7
-          suite: default
           requires:
             *lint_and_unit
 ```
