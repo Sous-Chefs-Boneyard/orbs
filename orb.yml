@@ -23,7 +23,12 @@ commands:
     steps:
       - run:
           name: Install Chef
-          command: curl -L https://omnitruck.chef.io/install.sh |
+          command: |
+            while sudo fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; do
+              sudo lsof /var/lib/dpkg/lock
+              sleep 1
+            done
+            curl -L https://omnitruck.chef.io/install.sh |
                     sudo bash -s -- -c <<parameters.channel>> -P chefdk
 
 jobs:
@@ -62,7 +67,8 @@ jobs:
       KITCHEN_LOCAL_YAML: .kitchen.dokken.yml
     steps:
       - checkout
-      - install_chef
+      - install_chef:
+          channel: <<parameters.channel>>
       - run:
           name: amazonlinux
           no_output_timeout: <<parameters.timeout>>
@@ -113,7 +119,8 @@ jobs:
       KITCHEN_LOCAL_YAML: .kitchen.dokken.yml
     steps:
       - checkout
-      - install_chef
+      - install_chef:
+          channel: <<parameters.channel>>
       - run:
           command: kitchen test <<parameters.suite>>
       - store_artifacts:
