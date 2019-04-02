@@ -5,7 +5,7 @@ This repository contains the [Sous-Chefs orb](https://circleci.com/orbs/registry
 ## View Source
 
 ```bash
-circleci orb source sous-chefs/kitchen@1.0.2
+circleci orb source sous-chefs/kitchen@1.1.2
 ```
 
 ## Usage
@@ -14,7 +14,9 @@ Include the orb and give it a namespace, in this case `kitchen`
 
 Then use the orb in a workflow.
 
-### Version 1.0.2
+Orbs can be used with semantic version pins - see [CircleCI documentation](https://circleci.com/docs/2.0/creating-orbs/#semantic-versioning-in-orbs)
+
+### Version 1.1.2
 
 ```yaml
 ---
@@ -27,7 +29,7 @@ lint_and_unit: &lint_and_unit
 
 version: 2.1
 orbs:
-  kitchen: sous-chefs/kitchen@dev:first
+  kitchen: sous-chefs/kitchen@1.1.2
 
 workflows:
   kitchen:
