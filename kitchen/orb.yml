@@ -64,7 +64,7 @@ jobs:
         type: string
         default: 1h
     environment:
-      KITCHEN_LOCAL_YAML: .kitchen.dokken.yml
+      KITCHEN_LOCAL_YAML: kitchen.dokken.yml
     steps:
       - checkout
       - install_chef:
@@ -116,7 +116,7 @@ jobs:
         type: string
         default: current
     environment:
-      KITCHEN_LOCAL_YAML: .kitchen.dokken.yml
+      KITCHEN_LOCAL_YAML: kitchen.dokken.yml
     steps:
       - checkout
       - install_chef:

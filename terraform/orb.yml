@@ -1,0 +1,18 @@
+---
+version: 2.1
+
+executors:
+  terraform:
+    docker: [image: "terraform/terraform"]
+
+command:
+  lint_terraform:
+    description: Lint Terraform
+    steps:
+      - run:
+          name: Lint Terraform
+          command: |
+            if [[ -n "$(terraform fmt -write=false)" ]]; then
+              echo "Some terraform files need be formatted, run 'terraform fmt' to fix";
+              exit 1;
+            fi
