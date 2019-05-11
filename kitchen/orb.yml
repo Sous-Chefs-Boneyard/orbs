@@ -65,6 +65,7 @@ jobs:
         default: 1h
     environment:
       KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+      CHEF_LICENSE: "accept-no-persist"
     steps:
       - checkout
       - install_chef:
@@ -117,6 +118,7 @@ jobs:
         default: current
     environment:
       KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+      CHEF_LICENSE: "accept-no-persist"
     steps:
       - checkout
       - install_chef:

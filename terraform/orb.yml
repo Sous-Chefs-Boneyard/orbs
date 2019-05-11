@@ -3,10 +3,10 @@ version: 2.1
 
 executors:
   terraform:
-    docker: [image: "terraform/terraform"]
+    docker: [image: "hashicorp/terraform"]
 
-command:
-  lint_terraform:
+commands:
+  lint:
     description: Lint Terraform
     steps:
       - run:
