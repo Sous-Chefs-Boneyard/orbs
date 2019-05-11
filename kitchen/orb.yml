@@ -73,35 +73,35 @@ jobs:
       - run:
           name: amazonlinux
           no_output_timeout: <<parameters.timeout>>
-          command: kitchen test <<parameters.suite>>-amazonlinux
+          command: CHEF_LICENSE="accept-no-persist" kitchen test <<parameters.suite>>-amazonlinux
       - run:
           name: amazonlinux-2
           no_output_timeout: <<parameters.timeout>>
-          command: kitchen test <<parameters.suite>>-amazonlinux-2
+          command: CHEF_LICENSE="accept-no-persist" kitchen test <<parameters.suite>>-amazonlinux-2
       - run:
           name: centos-6
           no_output_timeout: <<parameters.timeout>>
-          command: kitchen test <<parameters.suite>>-centos-6
+          command: CHEF_LICENSE="accept-no-persist" kitchen test <<parameters.suite>>-centos-6
       - run:
           name: centos-7
           no_output_timeout: <<parameters.timeout>>
-          command: kitchen test <<parameters.suite>>-centos-7
+          command: CHEF_LICENSE="accept-no-persist" kitchen test <<parameters.suite>>-centos-7
       - run:
           name: debian-8
           no_output_timeout: <<parameters.timeout>>
-          command: kitchen test <<parameters.suite>>-debian-8
+          command: CHEF_LICENSE="accept-no-persist" kitchen test <<parameters.suite>>-debian-8
       - run:
           name: debian-9
           no_output_timeout: <<parameters.timeout>>
-          command: kitchen test <<parameters.suite>>-debian-9
+          command: CHEF_LICENSE="accept-no-persist" kitchen test <<parameters.suite>>-debian-9
       - run:
           name: ubuntu-16.04
           no_output_timeout: <<parameters.timeout>>
-          command: kitchen test <<parameters.suite>>-ubuntu-1604
+          command: CHEF_LICENSE="accept-no-persist" kitchen test <<parameters.suite>>-ubuntu-1604
       - run:
           name: ubuntu-18.04
           no_output_timeout: <<parameters.timeout>>
-          command: kitchen test <<parameters.suite>>-ubuntu-1804
+          command: CHEF_LICENSE="accept-no-persist" kitchen test <<parameters.suite>>-ubuntu-1804
       - store_artifacts:
           path: .kitchen/logs
           when: always
@@ -124,7 +124,7 @@ jobs:
       - install_chef:
           channel: <<parameters.channel>>
       - run:
-          command: kitchen test <<parameters.suite>>
+          command: CHEF_LICENSE="accept-no-persist" kitchen test <<parameters.suite>>
       - store_artifacts:
           path: .kitchen/logs
           when: always
