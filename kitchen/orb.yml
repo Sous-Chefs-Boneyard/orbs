@@ -137,7 +137,7 @@ jobs:
           command: gem install mdl
       - run:
           name: Run Markdown Linter
-          command: mdl ./
+          command: ls **/* | grep "md" | mdl
   yamllint:
     executor: python
     steps:
