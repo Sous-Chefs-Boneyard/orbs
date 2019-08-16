@@ -20,7 +20,6 @@ Orbs can be used with semantic version pins - see [CircleCI documentation](https
 
 ```yaml
 ---
-# Use yaml anchors so we can get rid of some duplicated information
 lint_and_unit: &lint_and_unit
   - delivery
   - danger
@@ -29,7 +28,7 @@ lint_and_unit: &lint_and_unit
 
 version: 2.1
 orbs:
-  kitchen: sous-chefs/kitchen@1.1.2
+  kitchen: sous-chefs/kitchen@2
 
 workflows:
   kitchen:
@@ -46,9 +45,9 @@ workflows:
           name: delivery
 
       # Run multiple platforms at once
-      - kitchen/dokken:
-          name: source-17
-          suite: source-17
+      - kitchen/dokken-single:
+          name: default
+          suite: default
           requires:
             *lint_and_unit
 
