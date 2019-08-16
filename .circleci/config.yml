@@ -8,11 +8,10 @@ workflows:
   kitchen:
     jobs:
       # Lint and Unit Test
-      - kitchen/yamllint:
-          name: lint-yaml
       - kitchen/mdlint:
           name: lint-markdown
       - kitchen/danger:
           name: danger
           context: Danger
-      - orb-tools/lint
+      - orb-tools/lint:
+          name: orb-lint
