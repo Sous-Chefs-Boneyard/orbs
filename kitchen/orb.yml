@@ -3,7 +3,7 @@ version: 2.1
 
 executors:
   delivery:
-    docker: [image: "chef/chefdk:4.0.5"]
+    docker: [image: "chef/chefdk:4.4.1"]
   ruby:
     docker: [image: "circleci/ruby"]
   python:
