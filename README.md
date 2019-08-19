@@ -5,7 +5,7 @@ This repository contains the [Sous-Chefs orb](https://circleci.com/orbs/registry
 ## View Source
 
 ```bash
-circleci orb source sous-chefs/kitchen@1.1.2
+circleci orb source sous-chefs/kitchen@2
 ```
 
 ## Usage
