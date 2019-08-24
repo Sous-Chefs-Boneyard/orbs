@@ -24,7 +24,12 @@ commands:
       - run:
           name: Install Chef
           command: |
-            killall apt-get
+            while sudo fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; do
+              sudo lsof /var/lib/dpkg/lock
+              tail /var/log/unattended-upgrades/unattended-upgrades-dpkg.log
+              killall apt-get
+              sleep 1
+            done
             curl -L https://omnitruck.chef.io/install.sh |
                     sudo bash -s -- -c <<parameters.channel>> -P chefdk
 
