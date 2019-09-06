@@ -3,7 +3,7 @@ version: 2.1
 
 executors:
   delivery:
-    docker: [image: "chef/chefdk:4.4.1"]
+    docker: [image: "chef/chefdk:4.4.9"]
   ruby:
     docker: [image: "circleci/ruby"]
   python:
@@ -26,22 +26,10 @@ commands:
           command: |
             while sudo fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; do
               sudo lsof /var/lib/dpkg/lock
-              sudo killall apt-get || true
-              sudo killall dkpg || true
-              sudo killall unattended-upgrades || true
-
-              $upgrade_log = "/var/log/unattended-upgrades/unattended-upgrades-dpkg.log"
-              if [ -f "$upgrade_log" ];
-                tail "$upgrade_log"
-              fi
-
-              sudo lsof /var/lib/dpkg/lock || sudo kill -9
-              sudo systemctl stop unattended-upgrades
-              sudo systemctl disable unattended-upgrades
-              sleep 3
+              tail /var/log/unattended-upgrades/unattended-upgrades-dpkg.log
+              killall apt-get
+              sleep 1
             done
-            curl -L https://omnitruck.chef.io/install.sh |
-                    sudo bash -s -- -c <<parameters.channel>> -P chefdk
 
 jobs:
   danger:
