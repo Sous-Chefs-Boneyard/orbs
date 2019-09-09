@@ -1,4 +1,4 @@
-#!/user/bin/env bash
+#!/usr/bin/env bash
 
 main(){
   local version=${1:?Please specify a version to publish}
