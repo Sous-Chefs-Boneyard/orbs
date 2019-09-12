@@ -168,8 +168,12 @@ jobs:
       - checkout
       - run:
           name: Lint Terraform
-          command: |
-            if [[ -n "$(terraform fmt -check -recursive)" ]]; then
-              echo "Some terraform files need be formatted, run 'terraform fmt' to fix";
-              exit 1;
-            fi
+          command: terraform fmt -check -recursive
+
+  valite_terraform:
+    executor: terraform
+    steps:
+      - checkout
+      - run:
+          name: Validate Terraform
+          command: terraform validate
