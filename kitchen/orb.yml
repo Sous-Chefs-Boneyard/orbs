@@ -172,8 +172,16 @@ jobs:
 
   validate_terraform:
     executor: terraform
+    parameters:
+      folder:
+        description: Test Kitchen suite name
+        type: string
+        default: "."
     steps:
       - checkout
       - run:
+          name: Initialize Terraform
+          command: terraform init -upgrade <<parameters.folder>>
+      - run:
           name: Validate Terraform
-          command: terraform validate
+          command: terraform validate <<parameters.folder>>
