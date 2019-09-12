@@ -2,7 +2,7 @@
 version: 2.1
 
 executors:
-  delivery:
+  chefdk:
     docker: [image: "chef/chefdk:4.4.9"]
   ruby:
     docker: [image: "circleci/ruby"]
@@ -11,6 +11,8 @@ executors:
   chef:
     machine:
       image: "circleci/classic:201808-01"
+  terraform:
+    docker: [image: "hashicorp/terraform"]
 
 commands:
   install_chef:
@@ -39,12 +41,13 @@ jobs:
           name: Run Danger
           command: danger
   delivery:
-    executor: delivery
+    executor: chefdk
     steps:
       - checkout
       - run:
           name: Run delivery
           command: delivery local all
+
   dokken:
     executor: chef
     parameters:
@@ -124,6 +127,7 @@ jobs:
       - store_artifacts:
           path: .kitchen/logs
           when: always
+
   mdlint:
     executor: ruby
     steps:
@@ -134,6 +138,7 @@ jobs:
       - run:
           name: Run Markdown Linter
           command: mdl ./
+
   yamllint:
     executor: python
     steps:
@@ -146,3 +151,25 @@ jobs:
           command: |
             export PATH=/home/circleci/.local/bin:$PATH
             yamllint .
+
+  lint_ruby:
+    executor: ruby
+    steps:
+      - checkout
+      - run:
+          name: Lint Ruby
+          command: |
+            gem install rubocop --no-document
+            rubocop
+
+  lint_terraform:
+    executor: terraform
+    steps:
+    - checkout
+    - run:
+      name: Lint Terraform
+      command: |
+        if [[ -n "$(terraform fmt -check -recursive)" ]]; then
+          echo "Some terraform files need be formatted, run 'terraform fmt' to fix";
+          exit 1;
+        fi

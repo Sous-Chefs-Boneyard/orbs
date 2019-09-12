@@ -4,15 +4,28 @@ version: 2.1
 executors:
   terraform:
     docker: [image: "hashicorp/terraform"]
+  ruby:
+    docker: [image: "circleci/ruby:latest-browsers"]
 
-commands:
-  lint:
-    description: Lint Terraform
+jobs:
+  lint_ruby:
+    executor: ruby
     steps:
+      - checkout
       - run:
-          name: Lint Terraform
+          name: Lint Ruby
           command: |
-            if [[ -n "$(terraform fmt -check -recursive)" ]]; then
-              echo "Some terraform files need be formatted, run 'terraform fmt' to fix";
-              exit 1;
-            fi
+            gem install rubocop --no-document
+            rubocop
+
+  lint_terraform:
+    executor: terraform
+    steps:
+    - checkout
+    - run:
+      name: Lint Terraform
+      command: |
+        if [[ -n "$(terraform fmt -check -recursive)" ]]; then
+          echo "Some terraform files need be formatted, run 'terraform fmt' to fix";
+          exit 1;
+        fi
