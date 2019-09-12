@@ -170,7 +170,7 @@ jobs:
           name: Lint Terraform
           command: terraform fmt -check -recursive
 
-  valite_terraform:
+  validate_terraform:
     executor: terraform
     steps:
       - checkout
