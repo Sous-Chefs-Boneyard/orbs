@@ -174,9 +174,15 @@ jobs:
     executor: terraform
     parameters:
       folder:
-        description: Test Kitchen suite name
+        description: Folder to validate
         type: string
         default: "."
+      workspace:
+        description: Terraform workspace name
+        type: string
+        default: "default"
+    environment:
+      TF_WORKSPACE: <<parameters.workspace>>
     steps:
       - checkout
       - run:
