@@ -10,7 +10,7 @@ executors:
     docker: [image: "circleci/python"]
   chef:
     machine:
-      image: "circleci/classic:201808-01"
+      image: "ubuntu-1604:201903-01"
   terraform:
     docker: [image: "hashicorp/terraform"]
 
