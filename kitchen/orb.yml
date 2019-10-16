@@ -1,5 +1,5 @@
 ---
-version: 2.2
+version: 2.1  # this is circle version - orb versioned on release
 
 executors:
   chefdk:
