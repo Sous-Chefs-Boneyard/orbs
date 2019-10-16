@@ -16,7 +16,7 @@ Then use the orb in a workflow.
 
 Orbs can be used with semantic version pins - see [CircleCI documentation](https://circleci.com/docs/2.0/creating-orbs/#semantic-versioning-in-orbs)
 
-### Version 2.2.0
+### Usage
 
 The sous-chef standard for running platform tests is `kitchen/dokken-single` for every platform
 and each test should require `lint_and_unit` to allow circle to perform parallel builds.
