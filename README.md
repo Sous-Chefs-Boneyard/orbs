@@ -36,9 +36,9 @@ lint_and_unit: &lint_and_unit
   - lint-yaml
   - lint-markdown
 
-version: 2.1  # this is circle version
+version: 2.1
 orbs:
-  kitchen: sous-chefs/kitchen@2  # use latest version 2 orb
+  kitchen: sous-chefs/kitchen@2
 
 workflows:
   kitchen:
