@@ -2,11 +2,15 @@
 
 This file is used to list changes made in each version of the sous-chefs orb
 
-## v2.2.0
+## v2.0.23
+
+- Upgrade chefdk version to 4.4.50
+
+## v2.0.22
 
 - Upgrade chefdk version to 4.4.47
 
-## v2.1.0
+## v2.0.21
 
 - Upgrade chefdk version to 4.4.41
 
