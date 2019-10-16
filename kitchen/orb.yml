@@ -1,9 +1,9 @@
 ---
-version: 2.1
+version: 2.2
 
 executors:
   chefdk:
-    docker: [image: "chef/chefdk:4.4.41"]
+    docker: [image: "chef/chefdk:4.4.47"]
   ruby:
     docker: [image: "circleci/ruby"]
   python:

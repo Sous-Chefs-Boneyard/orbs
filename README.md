@@ -16,7 +16,17 @@ Then use the orb in a workflow.
 
 Orbs can be used with semantic version pins - see [CircleCI documentation](https://circleci.com/docs/2.0/creating-orbs/#semantic-versioning-in-orbs)
 
-### Version 1.1.2
+### Version 2.2.0
+
+The sous-chef standard for running platform tests is `kitchen/dokken-single` for every platform
+and each test should require `lint_and_unit` to allow circle to perform parallel builds.
+
+To generate your circle yaml config utilize:
+
+1. Alias `dokken` to `KITCHEN_LOCAL_YAML=kitchen.dokken.yml kitchen`
+1. Run `dokken list`, you should see a list of builds with dokken as the provider
+1. Download: [this script](https://github.com/sous-chefs/repo-management/blob/master/scripts/circleci_maker.rb) and make sure this is executable
+1. Run: `dokken list -j | ./circleci_maker.rb > .circleci/config.yml`
 
 ```yaml
 ---
@@ -26,9 +36,9 @@ lint_and_unit: &lint_and_unit
   - lint-yaml
   - lint-markdown
 
-version: 2.1
+version: 2.1  # this is circle version
 orbs:
-  kitchen: sous-chefs/kitchen@2
+  kitchen: sous-chefs/kitchen@2  # use latest version 2 orb
 
 workflows:
   kitchen:
