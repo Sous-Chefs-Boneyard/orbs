@@ -19,17 +19,18 @@ Orbs can be used with semantic version pins - see [CircleCI documentation](https
 ### Usage
 
 The sous-chef standard for running platform tests is `kitchen/dokken-single` for every platform
-and each test should require `lint_and_unit` to allow circle to perform parallel builds.
+and each test should require `lint_and_unit` to allow circleCI to perform parallel builds.
 
 To generate your circle yaml config utilize:
 
 1. Alias `dokken` to `KITCHEN_LOCAL_YAML=kitchen.dokken.yml kitchen`
-1. Run `dokken list`, you should see a list of builds with dokken as the provider
-1. Download: [this script](https://github.com/sous-chefs/repo-management/blob/master/scripts/circleci_maker.rb) and make sure this is executable
-1. Run: `dokken list -j | ./circleci_maker.rb > .circleci/config.yml`
+2. Run `dokken list`, you should see a list of builds with dokken as the provider
+3. Download: [this script](https://github.com/sous-chefs/repo-management/blob/master/scripts/circleci_maker.rb) and make sure this is executable
+4. Run: `dokken list -j | ./circleci_maker.rb > .circleci/config.yml`
+
+---
 
 ```yaml
----
 lint_and_unit: &lint_and_unit
   - delivery
   - danger
