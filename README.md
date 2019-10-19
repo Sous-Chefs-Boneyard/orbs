@@ -31,6 +31,7 @@ To generate your circle yaml config utilize:
 ---
 
 ```yaml
+
 lint_and_unit: &lint_and_unit
   - delivery
   - danger
