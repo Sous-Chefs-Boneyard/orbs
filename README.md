@@ -19,7 +19,7 @@ Orbs can be used with semantic version pins - see [CircleCI documentation](https
 ### Usage
 
 The sous-chef standard for running platform tests is `kitchen/dokken-single` for every platform
-and each test should require `lint_and_unit` to allow circle to perform parallel builds.
+and each test should require `lint_and_unit` to allow CircleCI to perform parallel builds.
 
 To generate your circle yaml config utilize:
 
