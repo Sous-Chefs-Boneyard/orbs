@@ -27,9 +27,9 @@ To generate your circle yaml config utilize:
 1. Run `dokken list`, you should see a list of builds with dokken as the provider
 1. Download: [this script](https://github.com/sous-chefs/repo-management/blob/master/scripts/circleci_maker.rb) and make sure this is executable
 1. Run: `dokken list -j | ./circleci_maker.rb > .circleci/config.yml`
----
-```yaml
 
+```yaml
+---
 lint_and_unit: &lint_and_unit
   - delivery
   - danger
