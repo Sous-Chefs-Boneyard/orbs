@@ -128,6 +128,35 @@ jobs:
           path: .kitchen/logs
           when: always
 
+  dokken-single-ipv6:
+    executor: chef
+    parameters:
+      suite:
+        description: Test Kitchen suite name
+        type: string
+      channel:
+        description: ChefDK channel stable or current
+        type: string
+        default: current
+    environment:
+      KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+      CHEF_LICENSE: "accept-no-persist"
+    steps:
+      - checkout
+      - run: >
+          docker network create --driver=bridge
+          --subnet=172.18.0.0/16 --gateway=172.18.0.1
+          --subnet=2001:db8:1::/64 --ipv6 dokken
+      - run:
+          command: docker network inspect dokken
+      - install_chef:
+          channel: <<parameters.channel>>
+      - run:
+          command: CHEF_LICENSE="accept-no-persist" kitchen test <<parameters.suite>>
+      - store_artifacts:
+          path: .kitchen/logs
+          when: always
+
   mdlint:
     executor: ruby
     steps:
