@@ -129,7 +129,7 @@ jobs:
       - when:
           condition: << parameters.enable-ipv6 >>
           steps:
-            - run: |
+            - run: >
                 docker network create --driver=bridge
                 --subnet=172.18.0.0/16 --gateway=172.18.0.1
                 --subnet=2001:db8:1::/64 --ipv6 dokken
