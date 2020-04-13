@@ -8,8 +8,6 @@ workflows:
   kitchen:
     jobs:
       # Lint and Unit Test
-      - kitchen/mdlint:
-          name: lint-markdown
       - kitchen/danger:
           name: danger
           context: Danger
